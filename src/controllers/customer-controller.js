@@ -2,6 +2,9 @@
 var repository = require('../repositories/customer-repository');
 const ValidationContract = require('../validators/fluent-validators');
 
+exports.get = async(req, res, next) => {
+    res.status(200).send(await repository.get());
+}
 
 exports.post = async(req, res, next) => {
     try {
@@ -12,8 +15,8 @@ exports.post = async(req, res, next) => {
         if(!validationContract.isValid()){
             return res.status(400).send(validationContract.errors())
         }
-        let customer = await repository.post(req.body);
-        res.status(500).send({message: 'Cliente salvo com sucesso!', id: customer._id })
+        let customer = await repository.create(req.body);
+        res.status(200).send({message: 'Cliente salvo com sucesso!', id: customer._id })
 
     } catch (e) {
         res.status(500).send({message: 'Ocorreu um erro ao tentar criar o cliente!', ex: e})

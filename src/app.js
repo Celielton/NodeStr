@@ -1,4 +1,5 @@
 //https://www.youtube.com/playlist?list=PLHlHvK2lnJndvvycjBqQAbgEDqXxKLoqn
+'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -25,11 +26,13 @@ const Order = require('./models/order');
 const indexRoute = require('./routers/index-route');
 const productRoute = require('./routers/product-route');
 const customerRoute = require('./routers/customer-route');
+const orderRoute = require('./routers/order-route');
 
 
 app.use('/', indexRoute);
 app.use('/products', productRoute);
 app.use('/customer', customerRoute);
+app.use('/order', orderRoute);
 
 
 module.exports = app;

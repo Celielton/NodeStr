@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 
@@ -9,5 +11,4 @@ exports.get = async() => {
 exports.create = async(data) => {
     let order = new Order(data);
     await order.save();
-    return order;
 }
