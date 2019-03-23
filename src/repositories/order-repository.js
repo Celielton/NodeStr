@@ -5,10 +5,13 @@ const Order = mongoose.model('Order');
 
 
 exports.get = async() => {
-    await Order.find({});
+    return await Order.find({}, 'customer')
+    .populate('customer', 'name')
+    .populate('items.product', 'title');
 }
 
 exports.create = async(data) => {
     let order = new Order(data);
     await order.save();
+    return order;
 }

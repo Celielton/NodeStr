@@ -3,19 +3,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    numero: {
+    number: {
         type: String,
         required: true,
+        index: true,
+        unique: true
     },
     createDate: {
-        type: String,
+        type: Date,
         required: true,
-        enum: ['created', 'done'],
-        default: 'created'
+        default: new Date()
     },
     status: {
         type: String,
         required: true,
+        enum: ['created', 'done'],
+        default: 'created'
     },
     customer: {
         type: mongoose.Schema.Types.ObjectId,

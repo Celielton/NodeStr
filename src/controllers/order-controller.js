@@ -11,10 +11,11 @@ exports.post = async(req, res, next) => {
     try {
         let data = req.body;
         data.number = guid.raw().substring(0,6);
-        await repository.create(data);
-        res.status(201).send({message: 'Pedido criado com sucesso!'});
+        console.log(data.number)
+        let o = await repository.create(data);
+        res.status(201).send({message: 'Pedido criado com sucesso!', id: o._id});
     } catch(ex) {
-        res.status(201).send({message: 'Ocorreu um erro ao criar pedido!', ex: ex});
+        res.status(500).send({message: 'Ocorreu um erro ao criar pedido!', ex: ex});
     }
    
 }
