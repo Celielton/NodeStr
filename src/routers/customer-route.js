@@ -5,7 +5,7 @@ const controller = require('../controllers/customer-controller');
 const authService = require('../services/auth-service');
 
 router.post('', controller.post);
-router.get('', controller.get);
+router.get('', authService.isAdmin, controller.get);
 router.post('/login', controller.authorize);
 router.post('/refreshToken', authService.authorize, controller.refreshToken);
 

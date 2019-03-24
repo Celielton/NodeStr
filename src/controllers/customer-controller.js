@@ -21,6 +21,7 @@ exports.post = async(req, res, next) => {
         let customer = await repository.create({
             name: req.body.name,
             email: req.body.email,
+            roles: ['user'],
             password: md5(req.body.password + global.SALT_KEY)
         });
 
@@ -44,7 +45,7 @@ exports.authorize = async(req, res, next) => {
              res.status(404).send({message: 'Usuário ou senha inválidos'});
              return;
         };
-        const token =  await authService.generate({id: customer._id, email: customer.email, name: customer.name});
+        const token =  await authService.generate({id: customer._id, email: customer.email, name: customer.name, roles: customer.roles});
         const data = {
                 token: token, 
                 costumer: {
@@ -70,7 +71,7 @@ exports.refreshToken = async(req, res, next) => {
              res.status(404).send({message: 'Usuário não encontrado'});
              return;
         };
-        const token =  await authService.generate({id: customer._id, email: customer.email, name: customer.name});
+        const token =  await authService.generate({id: customer._id, email: customer.email, name: customer.name, roles: customer.roles});
         res.status(200).send({token: token});
     } catch(e) {
         res.status(500).send({message: 'Ocorreu um erro fazer o refresh do token', ex: e})
