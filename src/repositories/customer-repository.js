@@ -16,3 +16,7 @@ exports.create = async (data) => {
 exports.authenticate = async(email, password) => {
     return Customer.findOne({ email: email, password: password});
 }
+
+exports.getById = async(id) => {
+    return Customer.findById(id);
+}

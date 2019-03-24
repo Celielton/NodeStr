@@ -44,7 +44,7 @@ exports.authorize = async(req, res, next) => {
              res.status(404).send({message: 'Usuário ou senha inválidos'});
              return;
         };
-        const token =  await authService.generate({email: customer.email, name: customer.name});
+        const token =  await authService.generate({id: customer._id, email: customer.email, name: customer.name});
         const data = {
                 token: token, 
                 costumer: {
@@ -56,6 +56,24 @@ exports.authorize = async(req, res, next) => {
         res.status(200).send(data);
     } catch(e) {
         res.status(500).send({message: 'Ocorreu um erro ao autenticar usuário', ex: e})
+    }
+ 
+}
+
+exports.refreshToken = async(req, res, next) => {
+    try {
+        const data = await authService.decode(req.headers['x-access-token']);
+        const customer = await repository
+        .getById(data.id);
+
+        if(!customer){
+             res.status(404).send({message: 'Usuário não encontrado'});
+             return;
+        };
+        const token =  await authService.generate({id: customer._id, email: customer.email, name: customer.name});
+        res.status(200).send({token: token});
+    } catch(e) {
+        res.status(500).send({message: 'Ocorreu um erro fazer o refresh do token', ex: e})
     }
  
 }
