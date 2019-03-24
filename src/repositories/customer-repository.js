@@ -12,3 +12,7 @@ exports.create = async (data) => {
     await customer.save();
     return customer;
 }
+
+exports.authenticate = async(email, password) => {
+    return Customer.findOne({ email: email, password: password});
+}

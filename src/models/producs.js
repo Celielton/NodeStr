@@ -31,7 +31,10 @@ const schema = new Schema({
     tags: [{
             type: String,
             required: true
-    }]
+    }],
+    image: {
+        type: String,
+    },
 })
 
 
